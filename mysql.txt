@@ -1,0 +1,47 @@
+ito yung code sa mysql:
+CREATE DATABASE attendance_db;
+USE attendance_db;
+
+CREATE TABLE Departments(
+Department_ID INT PRIMARY KEY,
+Department_Name VARCHAR(50)
+);
+
+CREATE TABLE Employees(
+Employee_ID INT PRIMARY KEY,
+First_Name VARCHAR(30),
+Last_Name VARCHAR(30),
+Position VARCHAR(30),
+Department_ID INT,
+FOREIGN KEY (Department_ID) REFERENCES Departments(Department_ID)
+);
+
+CREATE TABLE Attendance(
+Attendance_ID INT PRIMARY KEY AUTO_INCREMENT,
+Attendance_Date DATETIME,
+Time_In TIME,
+Time_Out TIME,
+Employee_ID INT,
+FOREIGN KEY (Employee_ID) REFERENCES Employees(Employee_ID)
+);
+
+INSERT INTO Departments (Department_ID, Department_Name)
+VALUES
+(1, 'Human Resources'),
+(2, 'Engineering'),
+(3, 'Sales'),
+(4, 'Marketing'),
+(5, 'Finance');
+
+INSERT INTO Employees (Employee_ID, First_Name, Last_Name, Position, Department_ID)
+VALUES
+(101, 'Alice', 'Smith', 'HR Manager', 1),
+(102, 'Bob', 'Johnson', 'Software Engineer', 2),
+(103, 'Charlie', 'Brown', 'Sales Executive', 3),
+(104, 'Diana', 'Prince', 'Marketing Specialist', 4),
+(105, 'Ethan', 'Hunt', 'Financial Analyst', 5),
+(106, 'Fiona', 'Gallagher', 'Recruiter', 1),
+(107, 'George', 'Miller', 'DevOps Engineer', 2),
+(108, 'Hannah', 'Baker', 'Sales Representative', 3),
+(109, 'Ian', 'Sommerhalder', 'Marketing Coordinator', 4),
+(110, 'Jessica', 'Jones', 'Accountant', 5);
