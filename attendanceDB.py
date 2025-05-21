@@ -102,12 +102,13 @@ def generate_reports():
         tree.heading("Date", text="Date")
         tree.heading("Time In", text="Time In")
         tree.heading("Time Out", text="Time Out")
+        
+        tree.column("Department", width=150, anchor="center")
+        tree.column("Name", width=150, anchor="center")
+        tree.column("Date", width=100, anchor="center")
+        tree.column("Time In", width=100, anchor="center")
+        tree.column("Time Out", width=100, anchor="center")
 
-        tree.column("Department", width=150)
-        tree.column("Name", width=150)
-        tree.column("Date", width=100)
-        tree.column("Time In", width=100)
-        tree.column("Time Out", width=100)
 
         for row in records:
             department = row[0]
