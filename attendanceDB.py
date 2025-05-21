@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from tkinter import *
 import mysql.connector
 from datetime import datetime
 
@@ -132,42 +133,61 @@ def clear_attendance():
 
 # Main GUI window
 root = tk.Tk()
-root.title("Employee Attendance System")
-root.geometry("400x300")
+root.title("Accutime Attendance System")
+root.geometry("600x420")
+root.configure(bg="#1e1e2f")
 
-# Styles
+# Modern theme colors
+PRIMARY_COLOR = "#3e8ef7"
+BG_COLOR = "#1e1e2f"
+CARD_COLOR = "#2c2f4a"
+TEXT_COLOR = "#ffffff"
+
+# Style Configuration
 style = ttk.Style()
-style.configure("TButton", font=("Segoe UI", 12))
-style.configure("TLabel", font=("Segoe UI", 12))
-style.configure("TCombobox", font=("Segoe UI", 12))
+style.theme_use("clam")
+
+style.configure("TFrame", background=BG_COLOR)
+style.configure("TLabel", background=CARD_COLOR, foreground=TEXT_COLOR, font=("Segoe UI", 12))
+style.configure("TButton", background=PRIMARY_COLOR, foreground='white', font=("Segoe UI", 11, "bold"), padding=6)
+style.configure("TCombobox", font=("Segoe UI", 11), padding=4)
+
+style.map("TButton",
+          background=[('active', '#5aa9fb')],
+          foreground=[('disabled', '#d3d3d3')])
 
 # Top Frame
-frame_top = ttk.Frame(root, padding=20)
-frame_top.pack(fill=tk.X)
+frame_top = ttk.Frame(root, padding=20, style="TFrame")
+frame_top.pack(fill=tk.X, padx=20, pady=10)
 
-label_employee = ttk.Label(frame_top, text="Select Employee:")
-label_employee.grid(row=0, column=0, padx=5, pady=5, sticky="w")
+title = ttk.Label(frame_top, text="ACCUTIME ATTENDANCE SYSTEM", font=("Segoe UI", 16, "bold"), anchor="center", style="TLabel")
+title.pack(pady=(0, 10), fill=tk.X)
+
+employee_section = ttk.Frame(frame_top, style="TFrame")
+employee_section.pack(pady=5)
+
+label_employee = ttk.Label(employee_section, text="Select Employee", font=('Segoe UI', 14, 'bold'), style="TLabel")
+label_employee.pack(anchor='center', pady=5)
 
 employee_dict = fetch_employees()
-employee_combo = ttk.Combobox(frame_top, values=list(employee_dict.keys()), state="readonly", width=30)
-employee_combo.grid(row=0, column=1, padx=5, pady=5)
+employee_combo = ttk.Combobox(employee_section, values=list(employee_dict.keys()), state="readonly", width=35)
+employee_combo.pack(pady=5)
 
 # Button Frame
+frame_buttons = ttk.Frame(root, padding=1, style="TFrame")
+frame_buttons.pack(pady=1)
 
-frame_buttons = ttk.Frame(root, padding=20)
-frame_buttons.pack()
-
-btn_clear_attendance = ttk.Button(frame_buttons, text="Clear Attendance", command=clear_attendance)
-btn_clear_attendance.grid(row=2, column=0, columnspan=2, pady=10)
-
-btn_time_in = ttk.Button(frame_buttons, text="Time In", command=time_in)
+btn_time_in = ttk.Button(frame_buttons, text="Time In", command=time_in, width=20)
 btn_time_in.grid(row=0, column=0, padx=10, pady=10)
 
-btn_time_out = ttk.Button(frame_buttons, text="Time Out", command=time_out)
+btn_time_out = ttk.Button(frame_buttons, text="Time Out", command=time_out, width=20)
 btn_time_out.grid(row=0, column=1, padx=10, pady=10)
 
-btn_generate_reports = ttk.Button(frame_buttons, text="Generate Reports", command=generate_reports)
-btn_generate_reports.grid(row=1, column=0, columnspan=2, pady=20)
+btn_generate_reports = ttk.Button(frame_buttons, text="Generate Reports", command=generate_reports, width=43)
+btn_generate_reports.grid(row=1, column=0, columnspan=2, pady=10)
 
-# Start GUI
+btn_clear_attendance = ttk.Button(frame_buttons, text="Clear Attendance", command=clear_attendance, width=43)
+btn_clear_attendance.grid(row=2, column=0, columnspan=2, pady=10)
+
+# Rounded corners simulation (only partial support in ttk)
 root.mainloop()
